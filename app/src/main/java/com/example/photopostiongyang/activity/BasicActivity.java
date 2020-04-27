@@ -6,9 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.example.photopostiongyang.R;
 
 public class BasicActivity extends AppCompatActivity {
     @Override
@@ -22,8 +19,6 @@ public class BasicActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
 
-        Toolbar myToolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(myToolbar);
     }
 
     public void setToolbarTitle(String title){

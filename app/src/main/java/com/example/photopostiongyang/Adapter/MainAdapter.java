@@ -13,7 +13,15 @@ import com.example.photopostiongyang.R;
 
 import java.util.List;
 
+
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
+    public interface OnItemClickListener{
+        void onItemClick(View v,int pos);
+    }
+    private OnItemClickListener mListener=null;
+    public void setOnItemClickListner(OnItemClickListener listner){
+        this.mListener=listner;
+    }
 
     private List<Board> mBoardList;   //데이터를 리스트형식 (model형으로 제네릭)
 
@@ -28,12 +36,24 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener(){
 
+                @Override
+                public void onClick(View v) {
+                    int pos=getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION){
+                        if(mListener!=null){
+                            mListener.onItemClick(v,pos);
+                        }
+                    }
+                }
+            });
             mTitleTextView=itemView.findViewById(R.id.item_title_text);
             mNameTextView=itemView.findViewById(R.id.item_name_text);
             mContentsTextView=itemView.findViewById(R.id.item_contents_text);
         }
     }
+
 
     @NonNull
     @Override

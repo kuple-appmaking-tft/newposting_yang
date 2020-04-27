@@ -38,10 +38,8 @@
         android:layout_height="wrap_content"
         android:text="업로드"
         tools:ignore="HardcodedText" />
-
-
     <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/imageSlider"
+        android:id="@+id/write_imageslider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:sliderAnimationDuration="600"
@@ -55,11 +53,9 @@
         app:sliderIndicatorRadius="2dp"
         app:sliderIndicatorSelectedColor="#5A5A5A"
         app:sliderIndicatorUnselectedColor="#FFF"
-        app:sliderScrollTimeInSec="1">
-
-    </com.smarteist.autoimageslider.SliderView>
+        app:sliderScrollTimeInSec="1"></com.smarteist.autoimageslider.SliderView>
 
 
-    </LinearLayout>
+</LinearLayout>
 
 

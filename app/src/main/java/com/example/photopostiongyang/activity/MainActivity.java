@@ -1,12 +1,12 @@
 package com.example.photopostiongyang.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photopostiongyang.Adapter.MainAdapter;
 import com.example.photopostiongyang.Model.Board;
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MainAdapter mainAdapter;
     private List<Board> mBoardList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //플로팅버튼
         findViewById(R.id.float_btn).setOnClickListener(this);
         mMainRecyclerView=findViewById(R.id.main_recycler_view);
+        mMainRecyclerView.setHasFixedSize(true);
+    //    mainAdapter=new MainAdapter(mBoardList);
+   //     mMainRecyclerView.setAdapter(mainAdapter);
+
+
         //파이어베이스에서 읽어오기
         mBoardList=new ArrayList<>();
 
@@ -44,17 +50,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         for(DocumentChange document:queryDocumentSnapshots.getDocumentChanges()){
 
                             // String id=(String) document.getDocument().get("id");
+
                             String title=(String)document.getDocument().get("Title");
                             String contents=(String)document.getDocument().get("contents");
-                             String name=(String)document.getDocument().get("name");
-                            Board data=new Board(title,name);
+                            // String name=(String)document.getDocument().get("name");
+                            Board data=new Board(title,contents);
                             mBoardList.add(data);
+                            mainAdapter=new MainAdapter(mBoardList);
+                            mainAdapter.setOnItemClickListner(new MainAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, int pos) {
+                                    startActivity(new Intent(getApplicationContext(),temp.class));
+
+                                }
+                            });
+                            mMainRecyclerView.setAdapter(mainAdapter);
                         }
-                        mainAdapter=new MainAdapter(mBoardList);
-                        mMainRecyclerView.setAdapter(mainAdapter);
+
                     }
                 });
+
+        //MainAdapter adapter=new MainAdapter(mBoardList);
+
+
     }
+
 
     @Override
     public void onClick(View v) {

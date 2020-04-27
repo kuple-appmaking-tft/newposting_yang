@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.photopostiongyang.Model.SliderItem;
 import com.example.photopostiongyang.R;
-import com.example.photopostiongyang.Model.SliderItem;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ public class SliderAdapterExample extends
         this.mSliderItems.add(sliderItem);
         notifyDataSetChanged();
     }
+   // public List<SliderItem> getItem(){return mSliderItems;}
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
