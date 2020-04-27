@@ -1,26 +1,26 @@
 package com.example.photopostiongyang.Model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class PostingInfo {
-    private List<String> imageStringlist;
+    private ArrayList<String> imageStringlist;
     private String title;
     private String contents;
     private String nickname;
     public PostingInfo(){}
 
-    public PostingInfo(List<String> imageStringlist, String title, String contents, String nickname) {
+    public PostingInfo(ArrayList<String> imageStringlist, String title, String contents, String nickname) {
         this.imageStringlist = imageStringlist;
         this.title = title;
         this.contents = contents;
         this.nickname = nickname;
     }
 
-    public List<String> getImageStringlist() {
+    public ArrayList<String> getImageStringlist() {
         return imageStringlist;
     }
 
-    public void setImageStringlist(List<String> imageStringlist) {
+    public void setImageStringlist(ArrayList<String> imageStringlist) {
         this.imageStringlist = imageStringlist;
     }
 

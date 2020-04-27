@@ -2,20 +2,21 @@ package com.example.photopostiongyang.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photopostiongyang.Adapter.MainAdapter;
-import com.example.photopostiongyang.Model.Board;
+import com.example.photopostiongyang.Model.PostingInfo;
 import com.example.photopostiongyang.R;
-import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mMainRecyclerView;
     private FirebaseFirestore mStore=FirebaseFirestore.getInstance();
     private MainAdapter mainAdapter;
-    private List<Board> mBoardList;
+    private List<PostingInfo> mPostingInfoList;
 
 
     @Override
@@ -36,39 +37,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.float_btn).setOnClickListener(this);
         mMainRecyclerView=findViewById(R.id.main_recycler_view);
         mMainRecyclerView.setHasFixedSize(true);
-    //    mainAdapter=new MainAdapter(mBoardList);
-   //     mMainRecyclerView.setAdapter(mainAdapter);
+    //
+
 
 
         //파이어베이스에서 읽어오기
-        mBoardList=new ArrayList<>();
-
-        mStore.collection("Board")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@NonNull QuerySnapshot queryDocumentSnapshots, @NonNull FirebaseFirestoreException e) {
-                        for(DocumentChange document:queryDocumentSnapshots.getDocumentChanges()){
-
-                            // String id=(String) document.getDocument().get("id");
-
-                            String title=(String)document.getDocument().get("Title");
-                            String contents=(String)document.getDocument().get("contents");
-                            // String name=(String)document.getDocument().get("name");
-                            Board data=new Board(title,contents);
-                            mBoardList.add(data);
-                            mainAdapter=new MainAdapter(mBoardList);
-                            mainAdapter.setOnItemClickListner(new MainAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int pos) {
-                                    startActivity(new Intent(getApplicationContext(),temp.class));
-
-                                }
-                            });
-                            mMainRecyclerView.setAdapter(mainAdapter);
-                        }
-
+        mPostingInfoList=new ArrayList<>();
+        DocumentReference documentReference=mStore.collection("Testing").document("users");
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    if(e !=null){
+                        Log.w("ddd", "Listen failed.", e);
+                        return;
                     }
-                });
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Log.d("success", "Current data: " + documentSnapshot.getData());
+                    PostingInfo postingInfo = documentSnapshot.toObject(PostingInfo.class);
+                     mPostingInfoList.add(postingInfo);
+                   // ArrayList<String> imageStringlist = postingInfo.getImageStringlist();
+                   mainAdapter=new MainAdapter(mPostingInfoList,MainActivity.this);
+                    mMainRecyclerView.setAdapter(mainAdapter);
+                } else {
+                    Log.d("data=null", "Current data: null");
+                }
+            }
+        });
+
+
 
         //MainAdapter adapter=new MainAdapter(mBoardList);
 

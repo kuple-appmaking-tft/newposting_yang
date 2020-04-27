@@ -21,7 +21,6 @@ import com.example.photopostiongyang.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,7 +38,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "제발...";
     private StorageReference mStorage;
     private static final int RESULT_LOAD_IMAGE = 1;
-    private List<String> imageStringList;
+    private ArrayList<String> imageStringList;
     private List<Uri> imageUriList;
     private FirebaseFirestore mStore ;
     private StorageReference mStorageRef;//이건 파일 업로드할떄
@@ -62,9 +61,9 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();//스토리지 추가되는  폴더  이름
+       //스토리지 추가되는  폴더  이름
         mStore = FirebaseFirestore.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("images");//데이터베이스에 추가되는 폴더 이름
+       // mDatabaseRef = FirebaseDatabase.getInstance().getReference("images");//데이터베이스에 추가되는 폴더 이름
 
 
         findViewById(R.id.write_upload_botton).setOnClickListener(this);
@@ -193,6 +192,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         loadingbar.setMessage("pleas wait업로딩중");
         loadingbar.setCanceledOnTouchOutside(false);
         loadingbar.show();
+        mStorageRef = FirebaseStorage.getInstance().getReference("image");//여기에 아이디적으면댐
 
         //post.put("Name", mWriteNameText.getText().toString());
 
@@ -200,7 +200,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             Uri imageUri = imageUriList.get(i);
             //.child("lasttest");//여기가 파일이름 차일드 쓰면 폴더 하나 추가댐
 
-            StorageReference riversRef = mStorageRef.child("images").child("image"+i);//images파일 또있으면 적용안댐
+            StorageReference riversRef = mStorageRef.child(imageUri.getLastPathSegment());//images파일 또있으면 적용안댐 아이디에 추가적으로 이미지저장
             //post.put("Images"+i,imageUri);
             riversRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
@@ -209,11 +209,11 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(WriteActivity.this,"스토리지에 이미지업로드 완료",Toast.LENGTH_LONG).show();
                 }
             });
-        }//for문끝
+        }//for문끝  스토리지에 저장만함
         PostingInfo postingInfo=new PostingInfo(imageStringList, mWriteTitle.getText().toString()
                 , mWriteContentsText.getText().toString(),new String("name"));
         mStore.collection("Testing")
-                .document()
+                .document("users")//이걸 개인문서로 만들자..
                 .set(postingInfo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
