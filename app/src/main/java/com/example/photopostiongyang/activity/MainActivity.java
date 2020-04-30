@@ -2,21 +2,20 @@ package com.example.photopostiongyang.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photopostiongyang.Adapter.MainAdapter;
 import com.example.photopostiongyang.Model.PostingInfo;
 import com.example.photopostiongyang.R;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //
 
 
-
         //파이어베이스에서 읽어오기
         mPostingInfoList=new ArrayList<>();
+        /*
         DocumentReference documentReference=mStore.collection("Testing").document("users");
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         return;
                     }
                 if (documentSnapshot != null && documentSnapshot.exists()) {
+
                     Log.d("success", "Current data: " + documentSnapshot.getData());
                     PostingInfo postingInfo = documentSnapshot.toObject(PostingInfo.class);
                      mPostingInfoList.add(postingInfo);
@@ -63,6 +63,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+        */ //여기는 변화만 불러오는작업
+
+        mStore.collection("Testing").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                       PostingInfo postingInfo=document.toObject(PostingInfo.class);
+                        mPostingInfoList.add(postingInfo);
+                        mainAdapter=new MainAdapter(mPostingInfoList,MainActivity.this);
+                        mMainRecyclerView.setAdapter(mainAdapter);
+                    }
+                }else{
+
+                }
+            }
+        });
+          //업데이트 될떄마다 가져오기
+
+
 
 
 

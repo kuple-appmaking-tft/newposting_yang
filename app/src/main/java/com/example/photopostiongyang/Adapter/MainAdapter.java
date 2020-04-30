@@ -86,7 +86,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {//class MainViewHolder의 holder <Board>형식의 data값을 참조.
         PostingInfo data=mPostingInfoList.get(position);
-        try {
+
             holder.mTitleTextView.setText(data.getTitle());
             holder.mNameTextView.setText(data.getNickname());
             holder.mContentsTextView.setText(data.getContents());
@@ -95,8 +95,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 sliderAdapterExample.addItem(new SliderItem(data.getImageStringlist().get(i)));
             }
             holder.mImageSliderView.setSliderAdapter(sliderAdapterExample);
-
-        }catch (NullPointerException e){e.fillInStackTrace();}
 
 
     }

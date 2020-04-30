@@ -213,13 +213,14 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         PostingInfo postingInfo=new PostingInfo(imageStringList, mWriteTitle.getText().toString()
                 , mWriteContentsText.getText().toString(),new String("name"));
         mStore.collection("Testing")
-                .document("users")//이걸 개인문서로 만들자..
+                .document()//이걸 개인문서로 만들자..
                 .set(postingInfo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(WriteActivity.this,"파이어스토어에저장완료",Toast.LENGTH_LONG).show();
                         loadingbar.dismiss();
+                        imageStringList.clear();
                         finish();
                     }
                 })
