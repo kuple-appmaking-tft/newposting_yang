@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -146,7 +147,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.modify:
-
+                        Toast.makeText(mContext,"무슨수정이냐 그냥 쳐 삭제해라",Toast.LENGTH_LONG).show();
                         return true;
                     case R.id.remove:
                         mStore.collection("Testing").document(documentId)
@@ -154,7 +155,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.d("TAG", "DocumentSnapshot successfully deleted!");
+                                        Toast.makeText(mContext,"데이터베이스에서 삭제됨.새로고침하셈",Toast.LENGTH_LONG).show();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

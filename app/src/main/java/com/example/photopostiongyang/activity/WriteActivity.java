@@ -18,8 +18,12 @@ import com.example.photopostiongyang.Adapter.SliderAdapterExample;
 import com.example.photopostiongyang.Model.PostingInfo;
 import com.example.photopostiongyang.Model.SliderItem;
 import com.example.photopostiongyang.R;
+import com.google.android.exoplayer2.util.Log;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,9 +34,7 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
-
 import java.util.Date;
-
 import java.util.List;
 
 
@@ -50,6 +52,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     private EditText mWriteContentsText;
     private SliderAdapterExample sliderAdapterExample;
     private ProgressDialog loadingbar;
+    private ArrayList<String> mDownloadURI;
+
 
 
 
@@ -115,11 +119,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.write_upload_botton:
-//                Map<String, Object> post = new HashMap<>();
-//                post.put("Title", mWriteTitle.getText().toString());
-//                post.put("contents", mWriteContentsText.getText().toString());
-
-
                         uploadFile();
 
                 break;
@@ -153,7 +152,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             } else {
 
                 ClipData clipData = data.getClipData();
-                if (clipData.getItemCount() > 10){
+                if (clipData.getItemCount() > 10) {
                     Toast.makeText(WriteActivity.this, "사진은 10개까지 선택가능 합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -166,17 +165,13 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
                 } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 10) {
                     for (int i = 0; i < clipData.getItemCount(); i++) {
-                   //     Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
+                        //     Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
                         imageStringList.add(String.valueOf(clipData.getItemAt(i).getUri()));
                         imageUriList.add(clipData.getItemAt(i).getUri());
                         sliderAdapterExample.addItem(new SliderItem(String.valueOf(clipData.getItemAt(i).getUri())));
                     }
                 }
             }
-
-          //  Intent intent = new Intent(WriteActivity.this, ImagesView.class);
-          //  intent.putStringArrayListExtra("list", imageList);
-          //  startActivity(intent);
         } else {
             Toast.makeText(WriteActivity.this, "사진 선택을 취소하였습니다.", Toast.LENGTH_SHORT).show();
         }
@@ -192,42 +187,69 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         loadingbar.setMessage("pleas wait업로딩중");
         loadingbar.setCanceledOnTouchOutside(false);
         loadingbar.show();
+        mDownloadURI = new ArrayList<>();
+        Date time = new Date();
+
         mStorageRef = FirebaseStorage.getInstance().getReference("image");//여기에 아이디적으면댐
-
-        //post.put("Name", mWriteNameText.getText().toString());
-
         for (int i = 0; i < imageUriList.size(); i++) {
             Uri imageUri = imageUriList.get(i);
-            StorageReference riversRef = mStorageRef.child(imageUri.getLastPathSegment());//images파일 또있으면 적용안댐 아이디에 추가적으로 이미지저장
-            //post.put("Images"+i,imageUri);
-            riversRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
+            StorageReference imgref = mStorageRef.child(imageUri.getLastPathSegment()+time.toString());//images파일 또있으면 적용안댐 아이디에 추가적으로 이미지저장
+            UploadTask uploadTask = imgref.putFile(imageUri);
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(WriteActivity.this,"스토리지에 이미지업로드 완료",Toast.LENGTH_LONG).show();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return imgref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        mDownloadURI.add(downloadUri.toString());
+                        Log.d("yang",mDownloadURI.get(0).toString());
+                        if(mDownloadURI.size()==imageUriList.size()){
+                            PostingInfo postingInfo = new PostingInfo(
+                                    mDownloadURI
+                                    , mWriteTitle.getText().toString()
+                                    , mWriteContentsText.getText().toString()
+                                    , new String("name")
+                                    , 0
+                                    , time);
+                            Log.d("성공","성공");
+                            storeUpload(postingInfo);
+                        }
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
                 }
             });
+
         }//for문끝  스토리지에 저장만함
 
-        //SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
-        Date time=new Date();
-
-        PostingInfo postingInfo=new PostingInfo(
-                  imageStringList
-                , mWriteTitle.getText().toString()
-                , mWriteContentsText.getText().toString()
-                ,new String("name")
-                ,0
-                , time);
 
 
+
+
+
+            //SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+
+
+    }
+    private void storeUpload(PostingInfo postingInfo){
         mStore.collection("Testing")
                 .document()//이걸 개인문서로 만들자..
                 .set(postingInfo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(WriteActivity.this,"파이어스토어에저장완료",Toast.LENGTH_LONG).show();
+                        Toast.makeText(WriteActivity.this, "파이어스토어에저장완료 새로고침 ㄱㄱ", Toast.LENGTH_LONG).show();
+                        Log.d("test", "스토어저장");
                         loadingbar.dismiss();
                         imageStringList.clear();
                         finish();
@@ -236,13 +258,11 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(WriteActivity.this,"파이어스토어에 저장실패",Toast.LENGTH_LONG).show();
+                        Toast.makeText(WriteActivity.this, "파이어스토어에 저장실패", Toast.LENGTH_LONG).show();
                         loadingbar.dismiss();
                         finish();
                     }
                 });
-
-
     }
 
     /////////////업로드
