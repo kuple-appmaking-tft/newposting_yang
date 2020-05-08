@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.WriteActivity"
+    android:orientation="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
+
+
+    <EditText
+        android:id="@+id/write_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Title"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        tools:ignore="HardcodedText" />
+    <EditText
+        android:id="@+id/write_contents_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contents"
+        tools:ignore="HardcodedText" />
+    <ImageButton
+        android:id="@+id/write_imagechoose_imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="이미지업로드"
+        android:src="@drawable/ic_galary"
+        android:text="dfsdfsdf" />
+    <Button
+        android:id="@+id/write_upload_botton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="업로드"
+        tools:ignore="HardcodedText" />
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/write_imageslider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="#5A5A5A"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="1"></com.smarteist.autoimageslider.SliderView>
+
+
+</LinearLayout>
+
+
