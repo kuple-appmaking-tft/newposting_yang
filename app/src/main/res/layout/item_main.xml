@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+<<<<<<< HEAD
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
@@ -33,6 +34,8 @@
 
 
 
+=======
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/item_imageslider"
             android:layout_width="match_parent"
@@ -72,6 +75,7 @@
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+<<<<<<< HEAD
 
 
 
@@ -173,6 +177,17 @@
                 app:layout_constraintStart_toEndOf="@+id/item_star_likeButton"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+        <TextView
+            android:id="@+id/item_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_person"
+            tools:ignore="HardcodedText"
+            android:drawableLeft="@drawable/ic_person" />
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
 
 
 

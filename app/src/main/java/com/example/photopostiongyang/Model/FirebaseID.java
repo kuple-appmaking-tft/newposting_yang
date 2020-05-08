@@ -1,5 +1,6 @@
 package com.example.photopostiongyang.Model;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,4 +20,7 @@ public class FirebaseID {
 
 
 
+=======
+public class FirebaseID {
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
 }

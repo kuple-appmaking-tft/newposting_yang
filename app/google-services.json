@@ -1,21 +1,65 @@
 {
   "project_info": {
+<<<<<<< HEAD
     "project_number": "624397363955",
     "firebase_url": "https://kuplezone-d4595.firebaseio.com",
     "project_id": "kuplezone-d4595",
     "storage_bucket": "kuplezone-d4595.appspot.com"
+=======
+    "project_number": "637374209645",
+    "firebase_url": "https://testformain.firebaseio.com",
+    "project_id": "testformain",
+    "storage_bucket": "testformain.appspot.com"
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
   },
   "client": [
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:624397363955:android:fd5648441665c3a386e586",
+=======
+        "mobilesdk_app_id": "1:637374209645:android:050dd03368fc458bab2964",
+        "android_client_info": {
+          "package_name": "com.example.kupleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637374209645-9c06un2fae1sbgo6h2omsol20j6t8j0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS1iAsQITQajwoa2Z2RdVs5hN4t4U37Sw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637374209645-9c06un2fae1sbgo6h2omsol20j6t8j0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637374209645:android:5fe8cb8ca53159d9ab2964",
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
         "android_client_info": {
           "package_name": "com.example.photopostiongyang"
         }
       },
       "oauth_client": [
         {
+<<<<<<< HEAD
           "client_id": "624397363955-n3l99v302apibdkoq4ej8443cn28gnj1.apps.googleusercontent.com",
+=======
+          "client_id": "637374209645-kl5cvuuvjps1pa3scqs5l83se9piaurd.apps.googleusercontent.com",
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.photopostiongyang",
@@ -23,20 +67,32 @@
           }
         },
         {
+<<<<<<< HEAD
           "client_id": "624397363955-3v5ld967d01um47t51kv7f0msothp6bh.apps.googleusercontent.com",
+=======
+          "client_id": "637374209645-9c06un2fae1sbgo6h2omsol20j6t8j0t.apps.googleusercontent.com",
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
           "client_type": 3
         }
       ],
       "api_key": [
         {
+<<<<<<< HEAD
           "current_key": "AIzaSyAcPbwERUr9PwxS5SPopr76-KBA813g4c4"
+=======
+          "current_key": "AIzaSyCS1iAsQITQajwoa2Z2RdVs5hN4t4U37Sw"
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
+<<<<<<< HEAD
               "client_id": "624397363955-3v5ld967d01um47t51kv7f0msothp6bh.apps.googleusercontent.com",
+=======
+              "client_id": "637374209645-9c06un2fae1sbgo6h2omsol20j6t8j0t.apps.googleusercontent.com",
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
               "client_type": 3
             }
           ]

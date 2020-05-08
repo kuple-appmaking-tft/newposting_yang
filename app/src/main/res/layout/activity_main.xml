@@ -104,6 +104,7 @@ app:layout_constraintTop_toBottomOf="@id/guideline2">
     <!--데이터베이스에 들어가야하는 이미지들-->
 
 
+<<<<<<< HEAD
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/main_SwipeRefreshLayout"
         android:layout_width="match_parent"
@@ -127,6 +128,20 @@ app:layout_constraintTop_toBottomOf="@id/guideline2">
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+=======
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_recycler_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/float_btn"
         android:layout_width="wrap_content"
@@ -135,5 +150,9 @@ app:layout_constraintTop_toBottomOf="@id/guideline2">
         android:src="@drawable/ic_write"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
     <!--플로팅 버튼-->
 </androidx.constraintlayout.widget.ConstraintLayout>

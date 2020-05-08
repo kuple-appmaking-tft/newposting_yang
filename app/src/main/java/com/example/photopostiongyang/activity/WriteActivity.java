@@ -30,7 +30,10 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Date;
+=======
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
 import java.util.List;
 
 
@@ -211,6 +214,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         }//for문끝  스토리지에 저장만함
+<<<<<<< HEAD
         //SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
         Date time=new Date();
 
@@ -223,6 +227,10 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 , time);
 
 
+=======
+        PostingInfo postingInfo=new PostingInfo(imageStringList, mWriteTitle.getText().toString()
+                , mWriteContentsText.getText().toString(),new String("name"));
+>>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
         mStore.collection("Testing")
                 .document()//이걸 개인문서로 만들자..
                 .set(postingInfo)
