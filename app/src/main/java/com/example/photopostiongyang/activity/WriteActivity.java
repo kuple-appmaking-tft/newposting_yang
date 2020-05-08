@@ -30,10 +30,9 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
+
 import java.util.Date;
-=======
->>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
+
 import java.util.List;
 
 
@@ -154,7 +153,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             } else {
 
                 ClipData clipData = data.getClipData();
-             //   Log.i("clipdata", String.valueOf(clipData.getItemCount()));
                 if (clipData.getItemCount() > 10){
                     Toast.makeText(WriteActivity.this, "사진은 10개까지 선택가능 합니다.", Toast.LENGTH_SHORT).show();
                     return;
@@ -162,8 +160,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 // 멀티 선택에서 하나만 선택했을 경우
                 else if (clipData.getItemCount() == 1) {
                     String dataStr = String.valueOf(clipData.getItemAt(0).getUri());
-                 //   Log.i("2. clipdata choice", String.valueOf(clipData.getItemAt(0).getUri()));
-                 //   Log.i("2. single choice", clipData.getItemAt(0).getUri().getPath());
                     imageStringList.add(dataStr);
                     imageUriList.add(data.getData());
                     sliderAdapterExample.addItem(new SliderItem(dataStr));
@@ -202,8 +198,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
         for (int i = 0; i < imageUriList.size(); i++) {
             Uri imageUri = imageUriList.get(i);
-            //.child("lasttest");//여기가 파일이름 차일드 쓰면 폴더 하나 추가댐
-
             StorageReference riversRef = mStorageRef.child(imageUri.getLastPathSegment());//images파일 또있으면 적용안댐 아이디에 추가적으로 이미지저장
             //post.put("Images"+i,imageUri);
             riversRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -214,7 +208,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         }//for문끝  스토리지에 저장만함
-<<<<<<< HEAD
+
         //SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
         Date time=new Date();
 
@@ -227,10 +221,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 , time);
 
 
-=======
-        PostingInfo postingInfo=new PostingInfo(imageStringList, mWriteTitle.getText().toString()
-                , mWriteContentsText.getText().toString(),new String("name"));
->>>>>>> f680a193d2a34204a75b05f0e4d5395ff9ec1779
         mStore.collection("Testing")
                 .document()//이걸 개인문서로 만들자..
                 .set(postingInfo)
