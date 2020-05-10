@@ -26,19 +26,22 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data android:scheme="https" android:host="www.photopostiongyang.com" />
                 <data android:scheme="app" android:host="com.example.photopostiongyang" />
-<!--                    android:pathPrefix="/gizmos" -->
-                <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-
+                <data android:scheme="kakao2cf871d149964bb23559636b4164c93a"
+                    android:host="kakaolink" />
+            </intent-filter>
         </activity>
-        <!--        <meta-data-->
-        <!--            android:name="com.kakao.sdk.AppKey"-->
-        <!--            android:value="@string/kakao_app_key"-->
-        <!--            />-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="2cf871d149964bb23559636b4164c93a" />
+
         <activity android:name=".activity.WriteActivity" />
         <activity android:name=".activity.BasicActivity" />
 

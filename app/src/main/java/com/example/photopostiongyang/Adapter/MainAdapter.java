@@ -25,6 +25,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.kakao.kakaolink.v2.KakaoLinkResponse;
+import com.kakao.kakaolink.v2.KakaoLinkService;
+import com.kakao.message.template.LinkObject;
+import com.kakao.message.template.TemplateParams;
+import com.kakao.message.template.TextTemplate;
+import com.kakao.network.ErrorResult;
+import com.kakao.network.callback.ResponseCallback;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -141,39 +148,54 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.mShareImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+// 타입별 템플릿 만들기 상세 예제코드는 [메시지 만들기] 참고
+                LinkObject link = LinkObject.newBuilder()
+                        //.setWebUrl(data.getDynamicLink())
+                        .setMobileWebUrl(data.getDynamicLink())
+                        .build();
+                TemplateParams params = TextTemplate.newBuilder("Text", link)
+                        .setButtonTitle("This is button")
+                        .build();
+
+
+// 기본 템플릿으로 카카오링크 보내기
+                KakaoLinkService.getInstance()
+                        .sendDefault(mContext, params, new ResponseCallback<KakaoLinkResponse>() {
+                            @Override
+                            public void onFailure(ErrorResult errorResult) {
+                                Log.e("KAKAO_API", "카카오링크 공유 실패: " + errorResult);
+                            }
+
+                            @Override
+                            public void onSuccess(KakaoLinkResponse result) {
+                                Log.i("KAKAO_API", "카카오링크 공유 성공");
+
+                                // 카카오링크 보내기에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
+                                Log.w("KAKAO_API", "warning messages: " + result.getWarningMsg());
+                                Log.w("KAKAO_API", "argument messages: " + result.getArgumentMsg());
+                            }
+                        });
             }
         });
 
         String date=data.getDate().toString();
         String date1=date.substring(11,16);
         String date2=date.substring(0,13)+" "+date.substring(30,34);
-        Log.d("dateYY", date2);
-        String[] split1=date1.split(":");
-        Log.d("date", date1);
+        //Log.d("dateYY", date2);
         holder.mDateTextView.setText(date1);
 
 //        Calendar calendar=Calendar.getInstance();
-//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("ee MMM dd :HH:mm yyyy");
-//        String dateTime=simpleDateFormat.format(new Date());
+////        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("ee MMM dd :HH:mm yyyy");
+////        String dateTime=simpleDateFormat.format(new Date());
         String dateTime=new Date().toString();
         dateTime=dateTime.substring(0,13)+" "+date.substring(30,34);
-        Log.d("dateYY", dateTime);
+        //Log.d("dateYY", dateTime);
        // Log.d("date", dateTime);
         holder.mNewDateImageView.setVisibility(View.INVISIBLE);
         if(dateTime.equals(date2)){
             holder.mNewDateImageView.setVisibility(View.VISIBLE);
         }
-
-
-
-
-
-
-
-
-
-
-
     }
     public void showPopup(View v,String documentId) {
         FirebaseFirestore mStore=FirebaseFirestore.getInstance();
@@ -212,6 +234,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
+    }
+    public void shareKaKao(){
+
     }
 
 

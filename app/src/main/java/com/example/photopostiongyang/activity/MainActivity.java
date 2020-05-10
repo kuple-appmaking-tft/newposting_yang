@@ -71,40 +71,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-    private void deepLinkSwitcher() {
+    private void deepLinkSwitcher() {//딥링크받음
         Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
             String intentData = intent.getData().toString();
-           Log.d("deepData", intentData);
-            if (intentData != null && !intentData.isEmpty()) {
+            Log.d("deepData", intentData.toString());
+            String appstring="https://www.photopostiongyang.com/";
+            String documentId=intentData.substring(34,intentData.length());
 
+            if (intentData != null && !intentData.isEmpty()) {//파이어베이스에서 만든 링크는 잘 들어옴.
                 /*
                 Here
                 SCHEME = https
                 HOST = www.pexels.com
                 PATH PATTERN = /@md-emran-hossain-emran-11822
                 * */
-                Intent intObj=null;
-                if (intentData.equalsIgnoreCase("https://www.photopostiongyang.com/Rr3D3mHjjOe8t0h1Eznp")) {
-                    intObj = new Intent(MainActivity.this , DetailActivity.class);
-                    startActivity(intObj);
-                }
-//
-//                /*
-//                Here
-//                SCHEME = uapp
-//                HOST = yrhost.com
-//                PATH PATTERN = /target_activity
-//                * */
-//                else if(intentData.equalsIgnoreCase("uapp://yrhost.com/target_activity")){
-//                    intObj = new Intent(MainActivity.this , DemoLink2Activity.class);
-//                }
-//                else if(intentData.equalsIgnoreCase("uapp://yrhost.com/target_another_activity")){
-//                    intObj = new Intent(MainActivity.this , DemoLink3Activity.class);
-//                }
-
-                if(intObj!=null)
-                    startActivity(intObj);
+                Intent documentIdIntent=new Intent(MainActivity.this,DetailActivity.class);
+                documentIdIntent.putExtra("DocumentId",documentId);
+                startActivity(documentIdIntent);
             }
         }
     }//end function
@@ -156,11 +140,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Log.w("양성열", "Listen failed.", e);
+
                             return;
                         }
                         if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                            Log.d("양성열", "Current data: " + queryDocumentSnapshots.getDocumentChanges());
+
                             mPostingInfoList.clear();
                             mDocumentIdList.clear();
                             for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){

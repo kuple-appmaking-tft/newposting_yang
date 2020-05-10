@@ -256,7 +256,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                             postingInfo.setDynamicLink(shortLink.toString());//uri로 바궈주자
                             Uri flowchartLink = task.getResult().getPreviewLink();
 
-                            newTestingRef
+                            mStore.collection("Testing").document(documentId)
                                     .set(postingInfo)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
