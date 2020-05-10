@@ -154,8 +154,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                         //.setWebUrl(data.getDynamicLink())
                         .setMobileWebUrl(data.getDynamicLink())
                         .build();
-                TemplateParams params = TextTemplate.newBuilder("Text", link)
-                        .setButtonTitle("This is button")
+                TemplateParams params = TextTemplate.newBuilder(data.getTitle(), link)
+                        .setButtonTitle(data.getTitle())
                         .build();
 
 
