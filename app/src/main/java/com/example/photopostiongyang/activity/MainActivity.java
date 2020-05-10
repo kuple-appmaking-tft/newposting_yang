@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.float_btn).setOnClickListener(this);
         mMainRecyclerView=findViewById(R.id.main_recycler_view);
         mMainRecyclerView.setHasFixedSize(true);
-
         swipeRefreshLayout=findViewById(R.id.main_SwipeRefreshLayout);
+        retreive_Testing();
+        deepLinkSwitcher();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -56,9 +57,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+        String getString=getIntent().getStringExtra("Refresh");
+       try {//업로드 하자마자 자동 refresh
+           if(getString.equals("success")){
+               mainAdapter.notifyDataSetChanged();
+           }
+       }catch (Exception e){
+          Log.d("eror", e.toString());
+       }
 
-        retreive_Testing();
+
+
+
+
     }
+    private void deepLinkSwitcher() {
+        Intent intent = getIntent();
+        if (intent != null && intent.getData() != null) {
+            String intentData = intent.getData().toString();
+           Log.d("deepData", intentData);
+            if (intentData != null && !intentData.isEmpty()) {
+
+                /*
+                Here
+                SCHEME = https
+                HOST = www.pexels.com
+                PATH PATTERN = /@md-emran-hossain-emran-11822
+                * */
+                Intent intObj=null;
+                if (intentData.equalsIgnoreCase("https://www.photopostiongyang.com/Rr3D3mHjjOe8t0h1Eznp")) {
+                    intObj = new Intent(MainActivity.this , DetailActivity.class);
+                    startActivity(intObj);
+                }
+//
+//                /*
+//                Here
+//                SCHEME = uapp
+//                HOST = yrhost.com
+//                PATH PATTERN = /target_activity
+//                * */
+//                else if(intentData.equalsIgnoreCase("uapp://yrhost.com/target_activity")){
+//                    intObj = new Intent(MainActivity.this , DemoLink2Activity.class);
+//                }
+//                else if(intentData.equalsIgnoreCase("uapp://yrhost.com/target_another_activity")){
+//                    intObj = new Intent(MainActivity.this , DemoLink3Activity.class);
+//                }
+
+                if(intObj!=null)
+                    startActivity(intObj);
+            }
+        }
+    }//end function
     //가져오기만하기
     public void retreive_Testing(){
         mPostingInfoList=new ArrayList<>();
@@ -77,6 +126,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mPostingInfoList.add(postingInfo);
                     }
                     mainAdapter = new MainAdapter(mPostingInfoList, MainActivity.this, mDocumentIdList);
+                    mainAdapter.setOnIemlClickListner(new MainAdapter.OnItemClickListener() {//클릭됬을때
+                        @Override
+                        public void onitemClick(View v, int pos) {
+                            Intent intent=new Intent(MainActivity.this,DetailActivity.class);
+                            intent.putExtra("DocumentId",mDocumentIdList.get(pos));
+                            Log.d("DocumentId",mDocumentIdList.get(pos));
+                            startActivity(intent);
+
+
+                        }
+                    });
                     mMainRecyclerView.setAdapter(mainAdapter);
                 } else {
                     Log.d("ttt", "Error getting documents: ", task.getException());
@@ -85,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
     //업데이트 된거 가져오기
-    public void retreive_Testing_update(){
+    public void retreive_Testing_update(){//실시간업로드 근데 사용안할듯
         mPostingInfoList=new ArrayList<>();
         mDocumentIdList=new ArrayList<>();
 

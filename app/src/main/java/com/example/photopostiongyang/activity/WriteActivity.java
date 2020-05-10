@@ -25,6 +25,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -121,6 +124,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             case R.id.write_upload_botton:
                         uploadFile();
 
+
                 break;
             case R.id.write_imagechoose_imageButton://겔러리랑연동
                 Intent intent = new Intent();
@@ -129,8 +133,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent,"Select Picture"), RESULT_LOAD_IMAGE);
                 break;
-
-
         }
     }
     //업로드파일
@@ -212,58 +214,86 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                         Uri downloadUri = task.getResult();
                         mDownloadURI.add(downloadUri.toString());
                         Log.d("yang",mDownloadURI.get(0).toString());
+
                         if(mDownloadURI.size()==imageUriList.size()){
+                            String dynamiclink="test";
                             PostingInfo postingInfo = new PostingInfo(
                                     mDownloadURI
                                     , mWriteTitle.getText().toString()
                                     , mWriteContentsText.getText().toString()
                                     , new String("name")
                                     , 0
-                                    , time);
+                                    , time
+                                    ,dynamiclink);
                             Log.d("성공","성공");
                             storeUpload(postingInfo);
                         }
-                    } else {
-                        // Handle failures
-                        // ...
                     }
                 }
             });
 
         }//for문끝  스토리지에 저장만함
 
-
-
-
-
-
-            //SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
-
-
     }
     private void storeUpload(PostingInfo postingInfo){
-        mStore.collection("Testing")
-                .document()//이걸 개인문서로 만들자..
-                .set(postingInfo)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
+        DocumentReference newTestingRef=mStore.collection("Testing").document();
+        String documentId=newTestingRef.getId();
+
+        Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse("https://www.photopostiongyang.com/"+documentId))
+                .setDomainUriPrefix("https://yangseongyeal.page.link")
+                // Set parameters
+                // ...
+                .buildShortDynamicLink()
+                .addOnCompleteListener(this, new OnCompleteListener<ShortDynamicLink>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(WriteActivity.this, "파이어스토어에저장완료 새로고침 ㄱㄱ", Toast.LENGTH_LONG).show();
-                        Log.d("test", "스토어저장");
-                        loadingbar.dismiss();
-                        imageStringList.clear();
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(WriteActivity.this, "파이어스토어에 저장실패", Toast.LENGTH_LONG).show();
-                        loadingbar.dismiss();
-                        finish();
+                    public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                        if (task.isSuccessful()) {
+                            // Short link created
+                            Uri shortLink = task.getResult().getShortLink();
+                            postingInfo.setDynamicLink(shortLink.toString());//uri로 바궈주자
+                            Uri flowchartLink = task.getResult().getPreviewLink();
+
+                            newTestingRef
+                                    .set(postingInfo)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            Toast.makeText(WriteActivity.this, "파이어스토어에저장완료 새로고침 ㄱㄱ", Toast.LENGTH_LONG).show();
+                                            Log.d("test", "스토어저장");
+                                            loadingbar.dismiss();
+                                            imageStringList.clear();
+                                            Log.d("도큐먼트",newTestingRef.getId());
+
+                                            Intent intent1 =new Intent(getApplicationContext(),MainActivity.class);
+                                            intent1.putExtra("Refresh","success");
+                                            startActivity(intent1);
+
+
+                                            //finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(WriteActivity.this, "파이어스토어에 저장실패", Toast.LENGTH_LONG).show();
+                                            loadingbar.dismiss();
+                                            finish();
+                                        }
+                                    });
+
+                        } else {
+                            // Error
+                            // ...
+                        }
                     }
                 });
+
     }
+
 
     /////////////업로드
 

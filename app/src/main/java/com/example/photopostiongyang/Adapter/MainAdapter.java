@@ -1,6 +1,7 @@
 package com.example.photopostiongyang.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.photopostiongyang.Model.PostingInfo;
 import com.example.photopostiongyang.Model.SliderItem;
 import com.example.photopostiongyang.R;
+import com.example.photopostiongyang.activity.MainActivity;
 import com.google.android.exoplayer2.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +31,7 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,7 +40,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     private List<PostingInfo> mPostingInfoList;
     private List<String> mDocumentIdList;
     //커스텀 리스터 정의
-
+///////////////////////////클릭리스너
     public interface OnItemClickListener{
         void onitemClick(View v,int pos);
     }
@@ -45,15 +48,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void setOnIemlClickListner(OnItemClickListener listner){
         this.mListener=listner;
     }
-    //
-
-     //데이터를 리스트형식 (model형으로 제네릭)
-
-//    public MainAdapter(List<PostingInfo> mPostingInfoList, Context mContext ) {//데이터 들어오면 저장해주는 생성자
-//        this.mPostingInfoList=mPostingInfoList;
-//        this.mContext=mContext;
-//    }
-
+////////////////////////////////
     public MainAdapter(List<PostingInfo> mPostingInfoList,Context mContext,List<String> mDocumentIdList) {
         this.mContext = mContext;
         this.mPostingInfoList = mPostingInfoList;
@@ -64,15 +59,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         private TextView mNameTextView;
         private TextView mContentsTextView;
         private SliderView mImageSliderView;
-
+        private TextView mDateTextView;
         private LikeButton mLikeButton;
         private TextView mLikeButton_count;
         private ImageView mImageview;//매뉴클릭릭
+        private ImageView mShareImageView;
+        private ImageView mNewDateImageView;
 
 
        public MainViewHolder(@NonNull View itemView) {
             super(itemView);
-
             mTitleTextView=itemView.findViewById(R.id.item_title_text);
             mNameTextView=itemView.findViewById(R.id.item_name_text);
             mContentsTextView=itemView.findViewById(R.id.item_contents_text);
@@ -80,7 +76,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             mImageview=itemView.findViewById(R.id.item_menudot_imageview);
             mLikeButton=itemView.findViewById(R.id.item_likeButton_likeButton);
             mLikeButton_count=itemView.findViewById(R.id.item_likeButton_textView);
-
+            mShareImageView=itemView.findViewById(R.id.item_share_imageview);
+            mDateTextView=itemView.findViewById(R.id.item_date);
+           mNewDateImageView=itemView.findViewById(R.id.item_dateN_ImageView);
             mImageSliderView.setIndicatorAnimation(IndicatorAnimations.THIN_WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
             mImageSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
             mImageSliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
@@ -89,13 +87,20 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             mImageSliderView.setScrollTimeInSec(3);
             mImageSliderView.setAutoCycle(false);
 
+            //////클릭리스너
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos=getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION){
+                        if(mListener!=null){
+                            mListener.onitemClick(v,pos);
+                        }
+                    }
+                }
+            });
         }
-
     }
-
-
-
-
     @NonNull
     @Override
     public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -120,9 +125,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             @Override
             public void liked(LikeButton likeButton) {
                 mStore.collection("Testing").document(documentId).update("likebutton_count", FieldValue.increment(1));
-
             }
-
             @Override
             public void unLiked(LikeButton likeButton) {
                 mStore.collection("Testing").document(documentId).update("likebutton_count", FieldValue.increment(-1));
@@ -135,6 +138,39 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 showPopup(v,documentId);
             }
         });
+        holder.mShareImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        String date=data.getDate().toString();
+        String date1=date.substring(11,16);
+        String date2=date.substring(0,13)+" "+date.substring(30,34);
+        Log.d("dateYY", date2);
+        String[] split1=date1.split(":");
+        Log.d("date", date1);
+        holder.mDateTextView.setText(date1);
+
+//        Calendar calendar=Calendar.getInstance();
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("ee MMM dd :HH:mm yyyy");
+//        String dateTime=simpleDateFormat.format(new Date());
+        String dateTime=new Date().toString();
+        dateTime=dateTime.substring(0,13)+" "+date.substring(30,34);
+        Log.d("dateYY", dateTime);
+       // Log.d("date", dateTime);
+        holder.mNewDateImageView.setVisibility(View.INVISIBLE);
+        if(dateTime.equals(date2)){
+            holder.mNewDateImageView.setVisibility(View.VISIBLE);
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -155,7 +191,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(mContext,"데이터베이스에서 삭제됨.새로고침하셈",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext,"데이터베이스에서 삭제됨.새로고침안해도댐",Toast.LENGTH_LONG).show();
+                                        Intent intent1 =new Intent(v.getContext(),MainActivity.class);
+                                        intent1.putExtra("Refresh","success");
+                                        mContext.startActivity(intent1);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

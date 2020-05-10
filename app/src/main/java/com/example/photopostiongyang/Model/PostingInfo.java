@@ -12,18 +12,49 @@ public class PostingInfo {
     private String title;
     private String contents;
     private String nickname;
+    private String dynamicLink;
 
+    @Override
+    public String toString() {
+        return "PostingInfo{" +
+                "imageStringlist=" + imageStringlist +
+                ", title='" + title + '\'' +
+                ", contents='" + contents + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", dynamicLink='" + dynamicLink + '\'' +
+                ", likebutton_count=" + likebutton_count +
+                ", date=" + date +
+                '}';
+    }
 
-    private int likebutton_count;
+    public String getDynamicLink() {
+        return dynamicLink;
+    }
 
-    public PostingInfo(ArrayList<String> imageStringlist, String title, String contents, String nickname, int likebutton_count, Date date) {
+    public void setDynamicLink(String dynamicLink) {
+        this.dynamicLink = dynamicLink;
+    }
+
+    public PostingInfo(ArrayList<String> imageStringlist, String title, String contents, String nickname, int likebutton_count, Date date, String dynamicLink) {
         this.imageStringlist = imageStringlist;
         this.title = title;
         this.contents = contents;
         this.nickname = nickname;
+        this.dynamicLink = dynamicLink;
+        this.likebutton_count = likebutton_count;
         this.date = date;
-        this.likebutton_count=likebutton_count;
-     }
+    }
+
+    private int likebutton_count;
+
+//    public PostingInfo(ArrayList<String> imageStringlist, String title, String contents, String nickname, int likebutton_count, Date date) {
+//        this.imageStringlist = imageStringlist;
+//        this.title = title;
+//        this.contents = contents;
+//        this.nickname = nickname;
+//        this.date = date;
+//        this.likebutton_count=likebutton_count;
+//     }
 
 
 
@@ -100,18 +131,5 @@ public class PostingInfo {
         this.nickname = nickname;
     }
 
-
-
-
-
-    @Override
-    public String toString() {
-        return "PostingInfo{" +
-                "imageStringlist=" + imageStringlist +
-                ", title='" + title + '\'' +
-                ", contents='" + contents + '\'' +
-                ", nickname='" + nickname + '\'' +
-                '}';
-    }
 
 }
