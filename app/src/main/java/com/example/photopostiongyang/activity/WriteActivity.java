@@ -104,7 +104,9 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.write_imagechoose_imageButton).setOnClickListener(this);
 
         mWriteTitle = findViewById(R.id.write_title_text);
+
         mWriteContentsText = findViewById(R.id.write_contents_text);
+
         loadingbar=new ProgressDialog(this);
 
         imageStringList=new ArrayList<>();//이거없으면안댐
@@ -293,6 +295,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 });
 
     }
+
+
 
 
     /////////////업로드

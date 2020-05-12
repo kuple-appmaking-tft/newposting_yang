@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retreive_Testing();
+                mainAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -117,8 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             intent.putExtra("DocumentId",mDocumentIdList.get(pos));
                             Log.d("DocumentId",mDocumentIdList.get(pos));
                             startActivity(intent);
-
-
                         }
                     });
                     mMainRecyclerView.setAdapter(mainAdapter);

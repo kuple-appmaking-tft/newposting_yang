@@ -120,6 +120,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         String documentId = mDocumentIdList.get(position);
 
         holder.mTitleTextView.setText(data.getTitle());
+
         holder.mNameTextView.setText(data.getNickname());
         holder.mContentsTextView.setText(data.getContents());
         SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(mContext);

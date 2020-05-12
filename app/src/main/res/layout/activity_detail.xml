@@ -1,110 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.DetailActivity"
-    android:orientation="vertical">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/detail_ConstraintLayout1"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+
+
+        android:id="@+id/detail_ScrollView"
+
         android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <ImageView
-            android:id="@+id/detail_backtoMain"
-            android:src="@drawable/ic_arrow__24dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:layout_constraintTop_toTopOf="@+id/detail_ConstraintLayout1"
-            app:layout_constraintLeft_toLeftOf="@+id/detail_ConstraintLayout1"
-            />
 
-        <ImageView
-            android:id="@+id/detail_menu_imageView"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_menu_dp"/>
+        android:layout_height="match_parent">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/detail_ConstraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <ImageView
-            android:id="@+id/detail_profile_Imageview"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_person_24dp"
-            app:layout_constraintTop_toTopOf="@+id/detail_ConstraintLayout2"
-            app:layout_constraintLeft_toLeftOf="@+id/detail_ConstraintLayout2"/>
-
-        <TextView
-            android:id="@+id/detail_name_TextVIew"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="4dp"
-
-            app:layout_constraintStart_toEndOf="@+id/detail_profile_Imageview"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/detail_date_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
-
-            android:layout_marginLeft="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/detail_profile_Imageview"
-            app:layout_constraintTop_toBottomOf="@+id/detail_name_TextVIew"
-            android:layout_marginStart="16dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-
-        <TextView
-            android:id="@+id/detail_title_TextView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="15dp"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".activity.DetailActivity">
 
-        <TextView
-            android:id="@+id/detail_contents_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_ConstraintLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="15sp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/detail_title_TextView" />
+                <ImageView
+                    android:id="@+id/detail_backtoMain"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_arrow__24dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/detail_ConstraintLayout1"
+                    app:layout_constraintTop_toTopOf="@+id/detail_ConstraintLayout1" />
 
-        <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/detail_imageSliderView"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/detail_contents_TextView">
-        </com.smarteist.autoimageslider.SliderView>
+                <ImageView
+                    android:id="@+id/detail_menu_imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_menu_dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_ConstraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/detail_profile_Imageview"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_person_24dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/detail_ConstraintLayout2"
+                    app:layout_constraintTop_toTopOf="@+id/detail_ConstraintLayout2" />
+
+                <TextView
+                    android:id="@+id/detail_name_TextVIew"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+
+                    app:layout_constraintStart_toEndOf="@+id/detail_profile_Imageview"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/detail_date_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/detail_profile_Imageview"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_name_TextVIew" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_ConstraintLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/detail_title_TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/detail_contents_TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="20dp"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_title_TextView" />
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/detail_imageSliderView"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_contents_TextView"></com.smarteist.autoimageslider.SliderView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detail_Reply_RecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_imageSliderView" />
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/detail_TextIputLayout"
+
+                style="style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#262fff"
+
+                app:endIconContentDescription="보내기기능"
+                app:endIconDrawable="@drawable/ic_send_black_24dp"
+                app:endIconMode="custom"
+
+                app:errorEnabled="true"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_ConstraintLayout3"
+                app:startIconContentDescription="댓글이미지"
+                app:startIconDrawable="@drawable/ic_favorite_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/detail_TextIputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

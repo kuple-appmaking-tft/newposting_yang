@@ -65,15 +65,21 @@
         android:textColor="@android:color/black"
         tools:ignore="HardcodedText"
         android:textStyle="bold"
-        android:textSize="20sp"/>
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:ems="16"
+        android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/item_contents_text"
             app:layout_constraintLeft_toLeftOf="@+id/item_textview_share_ConstraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/item_title_text"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ems="18"
+            android:ellipsize="end"/>
         <ImageView
             android:id="@+id/item_share_imageview"
             android:layout_width="35dp"

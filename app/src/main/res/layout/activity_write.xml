@@ -18,13 +18,20 @@
         android:hint="Title"
         android:textColor="@android:color/black"
         android:textSize="24sp"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        android:maxLength="18"
+        android:maxLines="1"
+        />
     <EditText
         android:id="@+id/write_contents_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contents"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+
+
+
+        />
     <ImageButton
         android:id="@+id/write_imagechoose_imageButton"
         android:layout_width="match_parent"
@@ -38,6 +45,7 @@
         android:layout_height="wrap_content"
         android:text="업로드"
         tools:ignore="HardcodedText" />
+
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/write_imageslider"
         android:layout_width="wrap_content"
@@ -53,7 +61,16 @@
         app:sliderIndicatorRadius="2dp"
         app:sliderIndicatorSelectedColor="#5A5A5A"
         app:sliderIndicatorUnselectedColor="#FFF"
-        app:sliderScrollTimeInSec="1"></com.smarteist.autoimageslider.SliderView>
+        app:sliderScrollTimeInSec="1"
+        android:windowSoftInputMode="adjustPan"
+
+
+
+
+        >
+
+
+    </com.smarteist.autoimageslider.SliderView>
 
 
 </LinearLayout>
